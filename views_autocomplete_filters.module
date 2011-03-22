@@ -1,6 +1,5 @@
 <?php
 // $Id: views_autocomplete_filters.module,v 1 vasike Exp $
- 
 /**
  * Implementation of hook_menu().
  */
@@ -59,7 +58,6 @@ function views_autocomplete_filters_form_views_ui_config_item_form_alter(&$form,
 	
 	$default['autocomplete_filter'] = empty($form_state['handler']->options['expose']['autocomplete_filter']) ? FALSE : $form_state['handler']->options['expose']['autocomplete_filter'];
 
-	
 		// Build form elements for the right side of the exposed filter form
 	$left = array();
 
@@ -78,4 +76,3 @@ function views_autocomplete_filters_form_views_ui_config_item_form_alter(&$form,
 	$first_chunk = array_splice($expose, 0, array_search('end_left', array_keys($expose)));
 	$form['options']['expose'] = array_merge($first_chunk, $left, $expose);
 }
-

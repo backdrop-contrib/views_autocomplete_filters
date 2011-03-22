@@ -1,11 +1,9 @@
 <?php
 // $Id: views_autocomplete_filters.module,v 1 vasike Exp $
-
 /**
  * @file
  * Common functions for Autocomplete Filters module.
  */
-
 /**
  * Menu callback; Retrieve a pipe delimited string of autocomplete suggestions.
  */
@@ -31,7 +29,6 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
  // views field handler data
  $field = $currentview->handler->handlers['field'][$field_name];
  $field_alias = $field->field_alias;
- //print_r($view);
 
  foreach ($view->result as $id => $row) {
    // Add a class wrapper for a few required CSS overrides.

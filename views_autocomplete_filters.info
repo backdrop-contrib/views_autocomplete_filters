@@ -1,1 +1,7 @@
-name Views Autocomplete Filters
+; $Id: views_autocomplete_filters.info,v 1 vasike Exp $
+name = Views Autocomplete Filters
+description = Views Autocomplete Filters
+package = Views
+core = 6.x
+dependencies[] = views
+dependencies[] = text

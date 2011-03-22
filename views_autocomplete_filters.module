@@ -1,0 +1,81 @@
+<?php
+// $Id: views_autocomplete_filters.module,v 1 vasike Exp $
+ 
+/**
+ * Implementation of hook_menu().
+ */
+function views_autocomplete_filters_menu() {
+ $items = array();
+ $items['autocomplete_filter'] = array(
+	 'title' => 'Autocomplete Filters',
+	 'page callback' => 'views_autocomplete_filter',
+	 'access arguments' => array('access content'),
+	 'file' => 'views_autocomplete_filters.inc',
+	 'type' => MENU_CALLBACK,
+ );
+ return $items;
+}
+
+/**
+ * Implementation of hook_views_api().
+ */
+function views_autocomplete_filters_selective_views_api() {
+  return array(
+    'api' => 2.0,
+  );
+}
+
+/**
+ * Implementation of hook_form_FORMID_alter() for views_exposed_form.
+ */
+function views_autocomplete_filters_form_views_exposed_form_alter(&$form, $form_state) {
+  // Go through each filter checking for a 'selective' setting
+  foreach ($form_state['view']->filter as $field => $filter) {
+    if ($filter->options['exposed']) {
+			 // If using selective filters, filter the value_options based on view results
+      if ($filter->options['expose']['autocomplete_filter']) {
+				unset($form[$field_id]['#default_value']);
+				$field_id = $form['#info']["filter-$field"]['value'];
+				$form[$field_id]['#autocomplete_path'] = 'autocomplete_filter/'.$field.'/'.$form_state['view']->name.'/'.$form_state['view']->current_display;
+			}
+    }
+  }
+}
+
+/**
+ * Implementation of hook_form_FORMID_alter() for views_ui_config_item_form.
+ */
+function views_autocomplete_filters_form_views_ui_config_item_form_alter(&$form, $form_state) {
+  if ('2' != substr(views_api_version(), 0, 1)) {
+    // Only continue for Views 2.x
+    return;
+  }
+	
+	if ($form['options']['value']['#type']!='textfield') {
+		return;
+  }
+
+  if (empty($form['options']['expose'])) return;
+	
+	$default['autocomplete_filter'] = empty($form_state['handler']->options['expose']['autocomplete_filter']) ? FALSE : $form_state['handler']->options['expose']['autocomplete_filter'];
+
+	
+		// Build form elements for the right side of the exposed filter form
+	$left = array();
+
+	// Build check all/none option form element
+	$left['autocomplete_filter'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Use Autocomplete'),
+		'#default_value' => $default['autocomplete_filter'],
+		'#description' => t(
+			'Use Autocomplete for this filter.'
+		),
+	);
+
+	// Insert Autocomplete Filter checkbox
+	$expose = $form['options']['expose'];
+	$first_chunk = array_splice($expose, 0, array_search('end_left', array_keys($expose)));
+	$form['options']['expose'] = array_merge($first_chunk, $left, $expose);
+}
+

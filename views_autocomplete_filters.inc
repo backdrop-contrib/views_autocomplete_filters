@@ -1,5 +1,6 @@
 <?php
 // $Id: views_autocomplete_filters.module,v 1 vasike Exp $
+
 /**
  * @file
  * Common functions for Autocomplete Filters module.
@@ -29,6 +30,7 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
  // views field handler data
  $field = $currentview->handler->handlers['field'][$field_name];
  $field_alias = $field->field_alias;
+ //print_r($view);
 
  foreach ($view->result as $id => $row) {
    // Add a class wrapper for a few required CSS overrides.
@@ -38,8 +40,10 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
  }
  if (!empty($matches)) {
 	 $autocomplete_filter_results[$results_id] = $matches;
- } else {
+ } elseif (!empty($view->result)) {
 	 $matches[''] = '<div class="reference-autocomplete">'. t('The %field field of this filter should be present also in the result (could be excluded from display).', array('%field' => $field_filter['expose']['label'])) . '</div>';
+ } else {
+	 $matches[''] = '<div class="reference-autocomplete">'. t('The %string return no results. Please try something else.', array('%string' => $string)) . '</div>';
  }
  drupal_json($matches);
 }

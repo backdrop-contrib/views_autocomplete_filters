@@ -19,18 +19,25 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
  //$view_args = array();
  $view = views_get_view($view_name);
  $view->set_display($view_display);
+ // force to have no limit for results
  $view->display_handler->set_option('items_per_page', 0);
+ $view->handler->items_per_page = $view->pager['items_per_page'] = 0;
  $currentview = $view->display[$view_display];
  // exposed form field name
  $field_filter = $currentview->handler->options['filters'][$field_name];
  // assign string value to the exposed text filter
  $view->exposed_input[$field_filter['expose']['identifier']] = $string;
+
+ $item = $view->get_item($view_display, 'filter', $field_name);
+ // overwrite the fields for the view
+ $view->display[$view_display]->handler->options['fields'] = array($field_name => $item);
+ $view->display[$view_display]->display_options['fields'] = array($field_name => $item);
  $view->execute($view->current_display);
+ 
  $currentview = $view->display[$view_display];
  // views field handler data
  $field = $currentview->handler->handlers['field'][$field_name];
  $field_alias = $field->field_alias;
- //print_r($view);
 
  foreach ($view->result as $id => $row) {
    // Add a class wrapper for a few required CSS overrides.

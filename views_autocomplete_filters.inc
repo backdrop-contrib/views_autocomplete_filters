@@ -24,6 +24,11 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
  $view->handler->items_per_page = $view->pager['items_per_page'] = 0;
  $currentview = $view->display[$view_display];
  // exposed form field name
+ if ($currentview->handler->options['defaults']['filters']) {
+	 $currentview = $view->display['default'];
+ } else {
+	 $currentview = $view->display[$view_display];
+ }
  $field_filter = $currentview->handler->options['filters'][$field_name];
  // assign string value to the exposed text filter
  $view->exposed_input[$field_filter['expose']['identifier']] = $string;

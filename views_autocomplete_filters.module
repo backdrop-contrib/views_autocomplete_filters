@@ -32,7 +32,7 @@ function views_autocomplete_filters_form_views_exposed_form_alter(&$form, $form_
   foreach ($form_state['view']->filter as $field => $filter) {
     if ($filter->options['exposed']) {
 			 // If using selective filters, filter the value_options based on view results
-      if ($filter->options['expose']['autocomplete_filter']) {
+      if (isset($filter->options['expose']['autocomplete_filter'])) {
 				unset($form[$field_id]['#default_value']);
 				$field_id = $form['#info']["filter-$field"]['value'];
 				$form[$field_id]['#autocomplete_path'] = 'autocomplete_filter/'.$field.'/'.$form_state['view']->name.'/'.$form_state['view']->current_display;

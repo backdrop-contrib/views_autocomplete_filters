@@ -1,7 +1,8 @@
-; $Id: views_autocomplete_filters.info,v 1 vasike Exp $
 name = Views Autocomplete Filters
 description = Views Autocomplete Filters
 package = Views
-core = 6.x
+core = 7.x
 dependencies[] = views
-dependencies[] = text
+files[] = views_autocomplete_filters.module
+files[] = views_autocomplete_filters.views.inc
+files[] = views_autocomplete_filters_handler_filter_string.inc

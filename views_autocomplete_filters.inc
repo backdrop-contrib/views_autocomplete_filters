@@ -12,7 +12,7 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
  static $autocomplete_filter_results;
  $results_id = $field_name.'_'.$view_name.'_'.$view_display.'_'.$string;
  if (isset($autocomplete_filter_results[$results_id])) {
-	  drupal_json($autocomplete_filter_results[$results_id]);
+	  drupal_json_output($autocomplete_filter_results[$results_id]);
 		return;
  }
  $matches = array();
@@ -57,5 +57,5 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
  } else {
 	 $matches[''] = '<div class="reference-autocomplete">'. t('The %string return no results. Please try something else.', array('%string' => $string)) . '</div>';
  }
- drupal_json($matches);
+ drupal_json_output($matches);
 }

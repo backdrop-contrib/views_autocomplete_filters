@@ -1,18 +1,17 @@
 <?php
-// $Id: views_autocomplete_filters.module,v 1 vasike Exp $ 
 /**
  * Implementation of hook_menu().
  */
 function views_autocomplete_filters_menu() {
- $items = array();
- $items['autocomplete_filter'] = array(
-   'title' => 'Autocomplete Filters',
-   'page callback' => 'views_autocomplete_filter',
-   'access arguments' => array('access content'),
-   'file' => 'views_autocomplete_filters.inc',
-   'type' => MENU_CALLBACK,
- );
- return $items;
+  $items = array();
+  $items['autocomplete_filter'] = array(
+    'title' => 'Autocomplete Filters',
+    'page callback' => 'views_autocomplete_filter',
+    'access arguments' => array('access content'),
+    'file' => 'views_autocomplete_filters.inc',
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
 }
 
 /**
@@ -31,7 +30,7 @@ function views_autocomplete_filters_form_views_exposed_form_alter(&$form, $form_
   // Go through each filter checking for a 'autocomplete' setting
   foreach ($form_state['view']->filter as $field => $filter) {
     if ($filter->options['exposed']) {
-       // If using selective filters, filter the value_options based on view results
+      // If using selective filters, filter the value_options based on view results
       if (isset($filter->options['expose']['autocomplete_filter']) && !empty($filter->options['expose']['autocomplete_filter'])) {
         $field_id = $form['#info']["filter-$field"]['value'];
         unset($form[$field_id]['#default_value']);

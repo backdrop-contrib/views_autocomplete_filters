@@ -13,9 +13,7 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
 	  drupal_json_output($autocomplete_filter_results[$results_id]);
 		return;
   }
-  //$field_name = str_replace('_value','',$field_name);
   $matches = array();
-  //$view_args = array();
   $view = views_get_view($view_name);
   if(!$view) {
     $matches[''] = '<div class="reference-autocomplete">'. t('The %string return no results. Please try something else.', array('%string' => $string)) . '</div>';
@@ -46,9 +44,9 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
  
   $currentview = $view->display[$view_display];
   // views field handler data
-  //$field = $currentview->handler->handlers['field'][$field_name];
   $field = $currentview->handler->handlers['field'][$real_field_name];
   $field_alias = $field->field_alias;
+	// check if it's a field
   if(0 === strpos($field->table,'field_data')){
     $field_alias_name = 'field_'.$field->field;
     foreach ($view->result as $id => $row) {

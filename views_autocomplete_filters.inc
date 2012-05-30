@@ -10,8 +10,8 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
   static $autocomplete_filter_results;
   $results_id = $field_name.'_'.$view_name.'_'.$view_display.'_'.$string;
   if (isset($autocomplete_filter_results[$results_id])) {
-	  drupal_json_output($autocomplete_filter_results[$results_id]);
-		return;
+    drupal_json_output($autocomplete_filter_results[$results_id]);
+    return;
   }
   $matches = array();
   $view = views_get_view($view_name);
@@ -27,10 +27,10 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
   $currentview = $view->display[$view_display];
   // exposed form field name
   if ($currentview->handler->options['defaults']['filters']) {
- 	 $currentview = $view->display['default'];
+    $currentview = $view->display['default'];
   }
   else {
-	 $currentview = $view->display[$view_display];
+   $currentview = $view->display[$view_display];
   }
   $field_filter = $currentview->handler->options['filters'][$field_name];
   $real_field_name = str_replace('_value', '', $field_name);
@@ -47,7 +47,7 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
   // views field handler data
   $field = $currentview->handler->handlers['field'][$real_field_name];
   $field_alias = $field->field_alias;
-	// check if it's a field
+  // check if it's a field
   if(0 === strpos($field->table,'field_data')){
     $field_alias_name = 'field_'.$field->field;
     foreach ($view->result as $id => $row) {
@@ -67,13 +67,13 @@ function views_autocomplete_filter($field_name = NULL, $view_name, $view_display
     }
   }
   if (!empty($matches)) {
-	  $autocomplete_filter_results[$results_id] = $matches;
+    $autocomplete_filter_results[$results_id] = $matches;
   }
   elseif (!empty($view->result)) {
-  $matches[''] = '<div class="reference-autocomplete">'. t('The %field is required but is missing or excluded from display.', array('%field' => $field_filter['expose']['label'])) . '</div>';
+    $matches[''] = '<div class="reference-autocomplete">'. t('The %field is required but is missing or excluded from display.', array('%field' => $field_filter['expose']['label'])) . '</div>';
   }
   else {
-	 $matches[''] = '<div class="reference-autocomplete">'. t('No matches were found for %string.', array('%string' => $string)) . '</div>';
+    $matches[''] = '<div class="reference-autocomplete">'. t('No matches were found for %string.', array('%string' => $string)) . '</div>';
   }
   drupal_json_output($matches);
 }

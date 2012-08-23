@@ -1,13 +1,16 @@
 <?php
+
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function views_autocomplete_filters_menu() {
   $items = array();
-  $items['autocomplete_filter'] = array(
+  $items['autocomplete_filter/%/%/%'] = array(
     'title' => 'Autocomplete Filters',
     'page callback' => 'views_autocomplete_filter',
-    'access arguments' => array('access content'),
+    'page arguments' => array(1, 2, 3),
+    'access callback' => '_views_autocomplete_filters_access_callback',
+    'access arguments' => array(2, 3),
     'file' => 'views_autocomplete_filters.inc',
     'type' => MENU_CALLBACK,
   );
@@ -15,27 +18,30 @@ function views_autocomplete_filters_menu() {
 }
 
 /**
- * Implementation of hook_views_api().
+ * Access callback of autocomplete menu item.
+ *
+ * @param string $view_name
+ * @param string $display_name
+ *
+ * @return bool
+ */
+function _views_autocomplete_filters_access_callback($view_name, $display_name) {
+  $view = views_get_view($view_name);
+
+  if (empty($view) || !$view->set_display($display_name)) {
+    // No such view or something is wrong with display
+    // (no such display, broken handler, etc.)
+    return FALSE;
+  }
+
+  return $view->access(array($display_name));
+}
+
+/**
+ * Implements hook_views_api().
  */
 function views_autocomplete_filters_views_api() {
   return array(
     'api' => 3.0,
   );
-}
-
-/**
- * Implementation of hook_form_FORMID_alter() for views_exposed_form.
- */
-function views_autocomplete_filters_form_views_exposed_form_alter(&$form, $form_state) {
-  // Go through each filter checking for a 'autocomplete' setting
-  foreach ($form_state['view']->filter as $field => $filter) {
-    if ($filter->options['exposed']) {
-      // If using selective filters, filter the value_options based on view results
-      if (isset($filter->options['expose']['autocomplete_filter']) && !empty($filter->options['expose']['autocomplete_filter'])) {
-        $field_id = $form['#info']["filter-$field"]['value'];
-        unset($form[$field_id]['#default_value']);
-        $form[$field_id]['#autocomplete_path'] = 'autocomplete_filter/'.$field.'/'.$form_state['view']->name.'/'.$form_state['view']->current_display;
-      }
-    }
-  }
 }

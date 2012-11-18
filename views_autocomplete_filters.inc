@@ -34,8 +34,8 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $str
 
   // Determine field which will be used for output.
   if (empty($expose_options['autocomplete_field'])) {
-    if ($view->get_item($display_name, 'field', $filters[$filter_name]['field'])) {
-      $field_name = $filters[$filter_name]['field'];
+    if ($view->get_item($display_name, 'field', $filters[$filter_name]['id'])) {
+      $field_name = $filters[$filter_name]['id'];
       // force raw data for no autocomplete field defined.
       $expose_options['autocomplete_raw_suggestion'] = 1;
       $expose_options['autocomplete_raw_dropdown'] = 1;

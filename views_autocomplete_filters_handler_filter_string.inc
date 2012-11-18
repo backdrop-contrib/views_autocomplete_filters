@@ -30,10 +30,9 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
     if (empty($field_options)) {
       $field_options[''] = t('<Add some fields to view>');
     }
-    elseif (empty($this->options['expose']['autocomplete_field']) && !empty($field_options[$this->field])) {
-      $this->options['expose']['autocomplete_field'] = $this->field;
+    elseif (empty($this->options['expose']['autocomplete_field']) && !empty($field_options[$this->options['id']])) {
+      $this->options['expose']['autocomplete_field'] = $this->options['id'];
     }
-
 
     // Build form elements for the right side of the exposed filter form
     $form['expose'] += array(
@@ -116,7 +115,7 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
 
     if (!empty($this->options['exposed']) && !empty($this->options['expose']['autocomplete_filter'])) {
       $fields = $this->view->display_handler->get_handlers('field');
-      $field_name = !empty($this->options['expose']['autocomplete_field']) ? $this->options['expose']['autocomplete_field'] : $this->field;
+      $field_name = !empty($this->options['expose']['autocomplete_field']) ? $this->options['expose']['autocomplete_field'] : $this->options['id'];
       if (empty($field_name) || empty($fields[$field_name])) {
         $errors[] = t('Field with autocomplete results is not selected for %label filter.', array(
           '%label' => $this->ui_name(TRUE),

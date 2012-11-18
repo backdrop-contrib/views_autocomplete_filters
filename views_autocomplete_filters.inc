@@ -34,13 +34,21 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $str
 
   // Determine field which will be used for output.
   if (empty($expose_options['autocomplete_field'])) {
-    // Field is not set, report about it to watchdog and return empty array.
-    watchdog('views_autocomplete_filters', 'Field for autocomplete filter %label is not set in view %view, display %display', array(
-      '%label' => $expose_options['label'],
-      '%view' => $view->name,
-      '%display' => $display->id,
-    ), WATCHDOG_ERROR);
-    return drupal_json_output(array());
+    if ($view->get_item($display_name, 'field', $filters[$filter_name]['field'])) {
+      $field_name = $filters[$filter_name]['field'];
+      // force raw data for no autocomplete field defined.
+      $expose_options['autocomplete_raw_suggestion'] = 1;
+      $expose_options['autocomplete_raw_dropdown'] = 1;
+    }
+    else {
+      // Field is not set, report about it to watchdog and return empty array.
+      watchdog('views_autocomplete_filters', 'Field for autocomplete filter %label is not set in view %view, display %display', array(
+        '%label' => $expose_options['label'],
+        '%view' => $view->name,
+        '%display' => $display->id,
+      ), WATCHDOG_ERROR);
+      return drupal_json_output(array());
+    }
   }
   else {
     $field_name = $expose_options['autocomplete_field'];

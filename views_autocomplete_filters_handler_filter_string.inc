@@ -92,7 +92,7 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
     }
     
     // Add autocomplete path to the exposed textfield.
-    $form['value']['#autocomplete_path'] = 'autocomplete_filter/' . $this->options['expose']['autocomplete_field'] . '/' . $this->view->name . '/' . $this->view->current_display;
+    $form['value']['#autocomplete_path'] = 'autocomplete_filter/' . $this->options['id'] . '/' . $this->view->name . '/' . $this->view->current_display;
     
     // Add JS script with core autocomplete overrides to the end of JS files
     // list to be sure it is added after the "misc/autocomplete.js" file. Also

@@ -29,7 +29,7 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
     $field_options_all = $this->view->display_handler->get_field_labels();
     // limit options to fields with the same name
     foreach ($this->view->display_handler->get_handlers('field') as $id => $handler) {
-      if ($handler->field == $this->field) {
+      if ($handler->real_field == $this->real_field) {
         $field_options[$id] = $field_options_all[$id];
       }
     }

@@ -83,6 +83,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $str
   if (empty($expose_options['autocomplete_items'])) {
     $pager = array(
       'type' => 'full',
+      'options' => array(),
     );
   }
   else {

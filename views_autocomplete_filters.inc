@@ -132,7 +132,8 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $str
       if (isset($item['value']) && stristr($item['value'], $string)) {
         $dropdown = $use_raw_dropdown ? check_plain($item['value']) : $rendered_field;
         if ($dropdown != '') {
-          $suggestion = $use_raw_suggestion ? check_plain($item['value']) : decode_entities($rendered_field);
+          $suggestion = $use_raw_suggestion ? check_plain($item['value']) : $rendered_field;
+          $suggestion = decode_entities($suggestion);
 
           // Add a class wrapper for a few required CSS overrides.
           $matches[$suggestion] = '<div class="reference-autocomplete">' . $dropdown . '</div>';

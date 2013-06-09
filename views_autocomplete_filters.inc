@@ -120,7 +120,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $str
     if ($use_raw_suggestion || $use_raw_dropdown) {
       $raw_field = $view->style_plugin->get_field_value($index, $field_name);
       if (!is_array($raw_field)) {
-        $raw_field = array($raw_field);
+        $raw_field = array(array('value' => $raw_field));
       }
     }
     

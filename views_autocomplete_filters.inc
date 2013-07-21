@@ -129,7 +129,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $str
     }
 
     foreach ($raw_field as $delta => $item) {
-      if (isset($item['value']) && stristr($item['value'], $string)) {
+      if (isset($item['value']) && strstr(drupal_strtolower($item['value']), drupal_strtolower($string))) {
         $dropdown = $use_raw_dropdown ? check_plain($item['value']) : $rendered_field;
         if ($dropdown != '') {
           $suggestion = $use_raw_suggestion ? check_plain($item['value']) : $rendered_field;

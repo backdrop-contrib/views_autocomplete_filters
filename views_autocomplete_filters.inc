@@ -25,6 +25,16 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   $display = $view->display[$display_name];
   $display_handler = $display->handler;
 
+  // Force "Display all values" for arguments set,
+  // to get results no matter of Not Contextual filter present settings.
+  $arguments = $display_handler->get_option('arguments');
+  if (!empty($arguments)) {
+    foreach ($arguments as $k => $argument) {
+      $arguments[$k]['default_action'] = 'ignore';
+    }
+    $display_handler->set_option('arguments', $arguments);
+  }
+
   // Get exposed filter options for our field.
   // Also, check if filter is exposed and autocomplete is enabled for this filter
   // (and if filter exists/exposed at all).

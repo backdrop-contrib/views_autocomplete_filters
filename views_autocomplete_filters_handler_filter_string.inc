@@ -94,15 +94,15 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
       // It's not an exposed form or autocomplete is not enabled.
       return;
     }
-    
+
     if (empty($form['value']['#type']) || $form['value']['#type'] !== 'textfield') {
       // Not a textfield.
       return;
     }
-    
+
     // Add autocomplete path to the exposed textfield.
-    $form['value']['#autocomplete_path'] = 'autocomplete_filter/' . $this->options['id'] . '/' . $this->view->name . '/' . $this->view->current_display;
-    
+    $form['value']['#autocomplete_path'] = 'autocomplete_filter/' . $this->options['id'] . '/' . $this->view->name . '/' . $this->view->current_display . '/' . implode('||', $this->view->args);
+
     // Add JS script with core autocomplete overrides to the end of JS files
     // list to be sure it is added after the "misc/autocomplete.js" file. Also
     // mark the field with special class.

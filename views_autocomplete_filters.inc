@@ -8,7 +8,7 @@
 /**
  * Menu callback. Retrieves a pipe delimited string of autocomplete suggestions.
  */
-function views_autocomplete_filter($filter_name, $view_name, $display_name, $string = '') {
+function views_autocomplete_filter($filter_name, $view_name, $display_name, $view_args, $string = '') {
   if (trim($string) == '') {
     // Ignore empty strings.
     return drupal_json_output(array());
@@ -18,10 +18,22 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $str
   // _views_autocomplete_filters_access_callback().
   $view = views_get_view($view_name);
   $view->set_display($display_name);
-
+  if (!empty($view_args)) {
+    $view->set_arguments(explode('||', $view_args));
+  }
   // Set display and display handler vars for quick access.
   $display = $view->display[$display_name];
   $display_handler = $display->handler;
+
+  // Force "Display all values" for arguments set,
+  // to get results no matter of Not Contextual filter present settings.
+  $arguments = $display_handler->get_option('arguments');
+  if (!empty($arguments)) {
+    foreach ($arguments as $k => $argument) {
+      $arguments[$k]['default_action'] = 'ignore';
+    }
+    $display_handler->set_option('arguments', $arguments);
+  }
 
   // Get exposed filter options for our field.
   // Also, check if filter is exposed and autocomplete is enabled for this filter

@@ -52,7 +52,7 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
         '#type' => 'textfield',
         '#title' => t('Maximum number of items in Autocomplete'),
         '#default_value' => $this->options['expose']['autocomplete_items'],
-        '#description' => t('Enter 0 for no limit.'),
+        '#description' => t('Enter 0 or empty for no limit.'),
         '#dependency' => array('edit-options-expose-autocomplete-filter' => array(TRUE)),
       ),
       'autocomplete_dependent' => array(

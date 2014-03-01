@@ -81,20 +81,18 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $str
 
   // Force limit for results.
   if (empty($expose_options['autocomplete_items'])) {
-    $pager = array(
-      'type' => 'full',
-      'options' => array(),
-    );
+    $pager_type = 'none';
   }
   else {
-    $pager = array(
-      'type' => 'some',
-      'options' => array(
-        'items_per_page' => $expose_options['autocomplete_items'],
-        'offset' => 0,
-      ),
-    );
+    $pager_type = 'some';
   }
+  $pager = array(
+    'type' => $pager_type,
+    'options' => array(
+      'items_per_page' => $expose_options['autocomplete_items'],
+      'offset' => 0,
+    ),
+  );
   $display_handler->set_option('pager', $pager);
 
   // Execute view query.

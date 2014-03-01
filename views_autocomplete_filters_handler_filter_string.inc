@@ -14,6 +14,7 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
     $options['expose']['contains'] += array(
       'autocomplete_filter' => array('default' => 0),
       'autocomplete_items' => array('default' => 10),
+      'autocomplete_min_chars' => array('default' => 0),
       'autocomplete_field' => array('default' => ''),
       'autocomplete_raw_suggestion' => array('default' => TRUE),
       'autocomplete_raw_dropdown' => array('default' => TRUE),
@@ -50,9 +51,15 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
       ),
       'autocomplete_items' => array(
         '#type' => 'textfield',
-        '#title' => t('Maximum number of items in Autocomplete'),
+        '#title' => t('Maximum number of items in Autocomplete results'),
         '#default_value' => $this->options['expose']['autocomplete_items'],
         '#description' => t('Enter 0 or empty for no limit.'),
+        '#dependency' => array('edit-options-expose-autocomplete-filter' => array(TRUE)),
+      ),
+      'autocomplete_min_chars' => array(
+        '#type' => 'textfield',
+        '#title' => t('Minimum number of characters to start filter.'),
+        '#default_value' => $this->options['expose']['autocomplete_min_chars'],
         '#dependency' => array('edit-options-expose-autocomplete-filter' => array(TRUE)),
       ),
       'autocomplete_dependent' => array(

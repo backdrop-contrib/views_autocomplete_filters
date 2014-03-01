@@ -54,12 +54,14 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
         '#title' => t('Maximum number of items in Autocomplete results'),
         '#default_value' => $this->options['expose']['autocomplete_items'],
         '#description' => t('Enter 0 or empty for no limit.'),
+        '#element_validate' => array('element_validate_integer'),
         '#dependency' => array('edit-options-expose-autocomplete-filter' => array(TRUE)),
       ),
       'autocomplete_min_chars' => array(
         '#type' => 'textfield',
-        '#title' => t('Minimum number of characters to start filter.'),
+        '#title' => t('Minimum number of characters to start filter'),
         '#default_value' => $this->options['expose']['autocomplete_min_chars'],
+        '#element_validate' => array('element_validate_integer'),
         '#dependency' => array('edit-options-expose-autocomplete-filter' => array(TRUE)),
       ),
       'autocomplete_dependent' => array(

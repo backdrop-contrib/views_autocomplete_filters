@@ -1,10 +1,9 @@
 <?php
 
 /**
- * Basic textfield filter to handle string filtering commands
- * including equality, like, not like, etc.
+ * Extend the multiple fields search filter handler with autocomplete.
  */
-class views_autocomplete_filters_handler_filter_string extends views_handler_filter_string {
+class views_autocomplete_filters_handler_filter_combine extends views_handler_filter_combine {
   // exposed filter options
   var $always_multiple = TRUE;
 
@@ -15,7 +14,6 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
       'autocomplete_filter' => array('default' => 0),
       'autocomplete_items' => array('default' => 10),
       'autocomplete_min_chars' => array('default' => 0),
-      'autocomplete_field' => array('default' => ''),
       'autocomplete_raw_suggestion' => array('default' => TRUE),
       'autocomplete_raw_dropdown' => array('default' => TRUE),
       'autocomplete_dependent' => array('default' => FALSE),
@@ -69,14 +67,6 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
         '#title' => t('Suggestions depend on other filter fields'),
         '#default_value' => $this->options['expose']['autocomplete_dependent'],
         '#description' => t('Autocomplete suggestions will be filtered by other filter fields'),
-        '#dependency' => array('edit-options-expose-autocomplete-filter' => array(TRUE)),
-      ),
-      'autocomplete_field' => array(
-        '#type' => 'select',
-        '#title' => t('Field with autocomplete results'),
-        '#default_value' => $this->options['expose']['autocomplete_field'],
-        '#options' => $field_options,
-        '#description' => t('Selected field will be used for dropdown results of autocomplete. In most cases it should be the same field you use for filter.'),
         '#dependency' => array('edit-options-expose-autocomplete-filter' => array(TRUE)),
       ),
       'autocomplete_raw_dropdown' => array(
@@ -144,8 +134,8 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
             // At this point we know we're looking at the correct display, and can check the fields.
             // Get the fields from the correct display.
             $display_fields = $display->handler->get_handlers('field');
-            $field_name = !empty($this->options['expose']['autocomplete_field']) ? $this->options['expose']['autocomplete_field'] : $this->options['id'];
-            if (empty($field_name) || empty($display_fields[$field_name])) {
+            $field_name = $this->options['fields'];
+            if (empty($field_name)) {
               $errors[] = t('Field with autocomplete results is not selected for %label filter in %display display.', array(
                 '%label' => $this->ui_name(TRUE),
                 '%display' => $display->display_title . ' (' . $display->id . ')',

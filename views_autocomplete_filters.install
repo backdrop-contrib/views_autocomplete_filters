@@ -1,0 +1,19 @@
+<?php
+/**
+ * @file
+ * Install file for views_autocomplete_filters.
+ */
+
+/**
+ * Notify registry of file move.
+ */
+function views_autocomplete_filters_update_7100() {
+  $class_name = 'views_autocomplete_filters_handler_filter_string';
+  $new_path = drupal_get_path('module', 'views_autocomplete_filters') . '/views/handlers/' . $class_name . '.inc';
+  db_update('registry')
+    ->fields(array('filename' => $new_path))
+    ->condition('name', $class_name)
+    ->execute();
+  cache_clear_all('*', 'cache_bootstrap', TRUE);
+  return t('Notified registry of moved file.');
+}

@@ -154,15 +154,22 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
       }
 
       foreach ($raw_field as $delta => $item) {
-        if (isset($item['value']) && strstr(drupal_strtolower($item['value']), drupal_strtolower($string))) {
-          $dropdown = $use_raw_dropdown ? check_plain($item['value']) : $rendered_field;
-          if ($dropdown != '') {
-            $suggestion = $use_raw_suggestion ? check_plain($item['value']) : $rendered_field;
-            $suggestion = decode_entities($suggestion);
-
-            // Add a class wrapper for a few required CSS overrides.
-            $matches[$suggestion] = '<div class="reference-autocomplete">' . $dropdown . '</div>';
+        $dropdown = '';
+        // Use transliteration if available.
+        if (function_exists('transliteration_get')) {
+          if (isset($item['value']) && strstr(transliteration_get(decode_entities(drupal_strtolower($item['value']))), transliteration_get(drupal_strtolower($string)))) {
+            $dropdown = $use_raw_dropdown ? check_plain($item['value']) : $rendered_field;
           }
+        }
+        elseif (isset($item['value']) && strstr(drupal_strtolower($item['value']), drupal_strtolower($string))) {
+          $dropdown = $use_raw_dropdown ? check_plain($item['value']) : $rendered_field;
+        }
+        if ($dropdown != '') {
+          $suggestion = $use_raw_suggestion ? check_plain($item['value']) : $rendered_field;
+          $suggestion = decode_entities($suggestion);
+
+          // Add a class wrapper for a few required CSS overrides.
+          $matches[$suggestion] = '<div class="reference-autocomplete">' . $dropdown . '</div>';
         }
       }
     }

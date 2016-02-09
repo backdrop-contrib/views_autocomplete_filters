@@ -180,5 +180,9 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
     $matches[''] = '<div class="reference-autocomplete">' . t('%string returned no results. Please try something else.', array('%string' => $string)) . '</div>';
   }
 
+  // Allow modules to alter the calculated matches or programmatically change
+  // empty results messages.
+  drupal_alter('views_autocomplete_filter_matches', $matches, $string, $view);
+
   return drupal_json_output($matches);
 }

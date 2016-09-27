@@ -199,8 +199,24 @@ function views_autocomplete_filters_filter_hander_validate(&$errors, $filter_han
           // and we can check the fields.
           // Get the fields from the correct display.
           $display_fields = $display->handler->get_handlers('field');
-          $field_name = $filter_handler->options['fields'];
-          if (empty($field_name)) {
+          $missing_autocomplete_fields = FALSE;
+          // Distinct validation per handler type.
+          switch ($filter_handler->definition['handler']) {
+            case 'views_autocomplete_filters_handler_filter_combine':
+              $field_name = $filter_handler->options['fields'];
+              if (empty($field_name)) {
+                $missing_autocomplete_fields = TRUE;
+              }
+              break;
+
+            default:
+              $field_name = !empty($filter_handler->options['expose']['autocomplete_field']) ? $filter_handler->options['expose']['autocomplete_field'] : $filter_handler->options['id'];
+              if (empty($field_name) || empty($display_fields[$field_name])) {
+                $missing_autocomplete_fields = TRUE;
+              }
+              break;
+          }
+          if ($missing_autocomplete_fields) {
             $errors[] = t('Field with autocomplete results is not selected for %label filter in %display display.', array(
               '%label' => $filter_handler->ui_name(TRUE),
               '%display' => $display->display_title . ' (' . $display->id . ')',

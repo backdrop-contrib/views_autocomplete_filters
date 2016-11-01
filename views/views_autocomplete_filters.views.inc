@@ -20,6 +20,14 @@ function views_autocomplete_filters_views_data_alter(&$data) {
         elseif ($data_field['filter']['handler'] == 'views_handler_filter_combine') {
           $data[$data_type][$fieldname]['filter']['handler'] = 'views_autocomplete_filters_handler_filter_combine';
         }
+        // Extend the Search API text indexed fields search filter handler with
+        // autocomplete.
+        elseif ($data_field['filter']['handler'] == 'SearchApiViewsHandlerFilterText') {
+          $data[$data_type][$fieldname]['filter']['handler'] = 'views_autocomplete_filters_handler_filter_search_api_text';
+        }
+        elseif ($data_field['filter']['handler'] == 'SearchApiViewsHandlerFilterFulltext') {
+          $data[$data_type][$fieldname]['filter']['handler'] = 'views_autocomplete_filters_handler_filter_search_api_fulltext';
+        }
       }
     }
   }

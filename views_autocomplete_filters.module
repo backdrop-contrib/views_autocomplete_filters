@@ -203,6 +203,7 @@ function views_autocomplete_filters_filter_hander_validate(&$errors, $filter_han
           // Distinct validation per handler type.
           switch ($filter_handler->definition['handler']) {
             case 'views_autocomplete_filters_handler_filter_combine':
+            case 'views_autocomplete_filters_handler_filter_search_api_fulltext':
               $field_name = $filter_handler->options['fields'];
               if (empty($field_name)) {
                 $missing_autocomplete_fields = TRUE;

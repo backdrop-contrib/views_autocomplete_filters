@@ -126,6 +126,11 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   $view->execute($view->current_display);
   $view->post_execute();
 
+  // Render it seems required by Search API Views integration.
+  if ($view->base_field == 'search_api_id' && stristr($view->base_table, 'search_api_index_')) {
+    $view->render();
+  }
+
   // Render field on each row and fill matches array.
   $use_raw_suggestion = !empty($expose_options['autocomplete_raw_suggestion']);
   $use_raw_dropdown = !empty($expose_options['autocomplete_raw_dropdown']);

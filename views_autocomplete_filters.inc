@@ -47,7 +47,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
 
   // Do not filter if the string length is less that minimum characters setting.
   if (isset($expose_options['autocomplete_min_chars']) && drupal_strlen(trim($string)) < $expose_options['autocomplete_min_chars']) {
-    $matches[''] = '<div class="reference-autocomplete">' . t('Search text should have at least %min_chars characters.', array('%min_chars' => $expose_options['autocomplete_min_chars'])) . '</div>';
+    $matches[''] = '<div class="reference-autocomplete reference-autocomplete--min-char">' . t('Search text should have at least %min_chars characters.', array('%min_chars' => $expose_options['autocomplete_min_chars'])) . '</div>';
     return drupal_json_output($matches);
   }
 
@@ -182,7 +182,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   unset($view->row_index);
 
   if (empty($matches)) {
-    $matches[''] = '<div class="reference-autocomplete">' . t('%string returned no results. Please try something else.', array('%string' => $string)) . '</div>';
+    $matches[''] = '<div class="reference-autocomplete reference-autocomplete--empty-result">' . t('%string returned no results. Please try something else.', array('%string' => $string)) . '</div>';
   }
 
   // Allow modules to alter the calculated matches or programmatically change

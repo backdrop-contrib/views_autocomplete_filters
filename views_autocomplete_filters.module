@@ -63,6 +63,7 @@ function views_autocomplete_filters_filter_hander_option_definition(&$options) {
     'autocomplete_raw_suggestion' => array('default' => TRUE),
     'autocomplete_raw_dropdown' => array('default' => TRUE),
     'autocomplete_dependent' => array('default' => FALSE),
+    'autocomplete_contextual' => array('default' => FALSE),
   );
 }
 
@@ -116,6 +117,13 @@ function views_autocomplete_filters_filter_hander_expose_form(&$form, &$form_sta
       '#title' => t('Suggestions depend on other filter fields'),
       '#default_value' => $filter_handler->options['expose']['autocomplete_dependent'],
       '#description' => t('Autocomplete suggestions will be filtered by other filter fields'),
+      '#dependency' => array('edit-options-expose-autocomplete-filter' => array(TRUE)),
+    ),
+    'autocomplete_contextual' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Allow Contextual filters to apply to this field'),
+      '#default_value' => $filter_handler->options['expose']['autocomplete_contextual'],
+      '#description' => t('Autocomplete suggestions will take into account Contextual filters. <strong>This will not work if you have filters that are dependent on the URL.</strong>'),
       '#dependency' => array('edit-options-expose-autocomplete-filter' => array(TRUE)),
     ),
     'autocomplete_field' => array(

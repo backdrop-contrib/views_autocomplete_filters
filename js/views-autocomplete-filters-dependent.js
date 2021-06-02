@@ -15,15 +15,20 @@ Drupal.ACDB.prototype.search = function (searchString) {
     return;
   }
 
-  // See if this key has been searched for before.
-  if (this.cache[searchString]) {
-    return this.owner.found(this.cache[searchString]);
-  }
-
   // Fill data with form values if we're working with dependent autocomplete
   var data = '';
   if (this.owner.isDependent()) {
     data = this.owner.serializeOuterForm();
+  }
+
+  // See if this key has been searched for before.
+  if (typeof this.lastData === 'undefined' || this.lastData !== data) {
+    // Clear the cache if the dependent data has changed.
+    this.cache = {};
+    this.lastData = data;
+  }
+  else if (this.cache[searchString]) {
+    return this.owner.found(this.cache[searchString]);
   }
 
   // Initiate delayed search.

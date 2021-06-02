@@ -1,14 +1,11 @@
 <?php
-
 /**
  * @file
  * Hooks provided by Views Autocomplete Filters.
  */
 
-
 /**
- * Allow modules to alter the calculated matches or programmatically change
- * empty results messages.
+ * Alter the calculated matches or empty results messages.
  *
  * @param array $matches
  *   Markup for autocomplete matches, keyed by suggestion text.

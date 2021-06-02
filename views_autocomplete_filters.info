@@ -1,10 +1,11 @@
+type = module
 name = Views Autocomplete Filters
-description = Views Autocomplete Filters
+description = Autocomplete functionality for the views filter text fields.
 package = Views
-core = 7.x
+backdrop = 1.x
+
 dependencies[] = views
-files[] = views_autocomplete_filters.module
-files[] = views/views_autocomplete_filters.views.inc
+
 files[] = views/handlers/views_autocomplete_filters_handler_filter_string.inc
 files[] = views/handlers/views_autocomplete_filters_handler_filter_combine.inc
 files[] = views/handlers/views_autocomplete_filters_handler_filter_search_api_text.inc

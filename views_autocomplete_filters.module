@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Autocomplete functionality for the views filter text fields.
+ */
 
 /**
  * Implements hook_menu().
@@ -43,7 +47,7 @@ function _views_autocomplete_filters_access_callback($view_name, $display_name) 
 function views_autocomplete_filters_views_api() {
   return array(
     'api' => 3,
-    'path' => drupal_get_path('module', 'views_autocomplete_filters') . '/views',
+    'path' => backdrop_get_path('module', 'views_autocomplete_filters') . '/views',
   );
 }
 
@@ -177,8 +181,8 @@ function views_autocomplete_filters_filter_hander_value_form(&$form, &$form_stat
   // list to be sure it is added after the "misc/autocomplete.js" file. Also
   // mark the field with special class.
   if (!empty($filter_handler->options['expose']['autocomplete_dependent'])) {
-    $file_path = drupal_get_path('module', 'views_autocomplete_filters') . '/js/views-autocomplete-filters-dependent.js';
-    drupal_add_js($file_path, array(
+    $file_path = backdrop_get_path('module', 'views_autocomplete_filters') . '/js/views-autocomplete-filters-dependent.js';
+    backdrop_add_js($file_path, array(
       'weight' => 99,
     ));
 

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Definition of views_autocomplete_filters_handler_filter_string.

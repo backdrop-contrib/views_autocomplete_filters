@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Common functions for Views Autocomplete Filters module.
@@ -11,7 +10,7 @@
 function views_autocomplete_filter($filter_name, $view_name, $display_name, $view_args, $string = '') {
   if (trim($string) == '') {
     // Ignore empty strings.
-    return drupal_json_output(array());
+    return backdrop_json_output(array());
   }
 
   // If the search text has a '/', then the system will split it into
@@ -41,7 +40,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   // (and if filter exists/exposed at all).
   $filters = $display_handler->get_option('filters');
   if (empty($filters[$filter_name]['exposed']) || empty($filters[$filter_name]['expose']['autocomplete_filter'])) {
-    return drupal_not_found();
+    return backdrop_not_found();
   }
   $filter = $filters[$filter_name];
   $expose_options = $filter['expose'];
@@ -59,9 +58,9 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   }
 
   // Do not filter if the string length is less that minimum characters setting.
-  if (isset($expose_options['autocomplete_min_chars']) && drupal_strlen(trim($string)) < $expose_options['autocomplete_min_chars']) {
+  if (isset($expose_options['autocomplete_min_chars']) && backdrop_strlen(trim($string)) < $expose_options['autocomplete_min_chars']) {
     $matches[''] = '<div class="reference-autocomplete reference-autocomplete--min-char">' . t('Search text should have at least %min_chars characters.', array('%min_chars' => $expose_options['autocomplete_min_chars'])) . '</div>';
-    return drupal_json_output($matches);
+    return backdrop_json_output($matches);
   }
 
   // Determine fields which will be used for output.
@@ -79,7 +78,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
         '%view' => $view->name,
         '%display' => $display->id,
       ), WATCHDOG_ERROR);
-      return drupal_json_output(array());
+      return backdrop_json_output(array());
     }
   }
   // Text field autocomplete filter.
@@ -101,7 +100,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
         '%view' => $view->name,
         '%display' => $display->id,
       ), WATCHDOG_ERROR);
-      return drupal_json_output(array());
+      return backdrop_json_output(array());
     }
   }
 
@@ -185,11 +184,11 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
         $dropdown = '';
         // Use transliteration if available.
         if (function_exists('transliteration_get')) {
-          if (isset($item['value']) && strstr(transliteration_get(decode_entities(drupal_strtolower($item['value']))), transliteration_get(drupal_strtolower($string)))) {
+          if (isset($item['value']) && strstr(transliteration_get(decode_entities(backdrop_strtolower($item['value']))), transliteration_get(backdrop_strtolower($string)))) {
             $dropdown = $use_raw_dropdown ? check_plain($item['value']) : $rendered_field;
           }
         }
-        elseif (isset($item['value']) && strstr(drupal_strtolower($item['value']), drupal_strtolower($string))) {
+        elseif (isset($item['value']) && strstr(backdrop_strtolower($item['value']), backdrop_strtolower($string))) {
           $dropdown = $use_raw_dropdown ? check_plain($item['value']) : $rendered_field;
         }
         if ($dropdown != '') {
@@ -210,7 +209,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
 
   // Allow modules to alter the calculated matches or programmatically change
   // empty results messages.
-  drupal_alter('views_autocomplete_filter_matches', $matches, $string, $view);
+  backdrop_alter('views_autocomplete_filter_matches', $matches, $string, $view);
 
-  return drupal_json_output($matches);
+  return backdrop_json_output($matches);
 }

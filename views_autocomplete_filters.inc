@@ -14,6 +14,17 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
     return drupal_json_output(array());
   }
 
+  // If the search text has a '/', then the system will split it into
+  // multiple arguments.
+  $args = func_get_args();
+  // Shift off the $filter_name, $view_name, $display_name, $view_args
+  // arguments.
+  for ($i = 0; $i < 4; $i++) {
+    array_shift($args);
+  }
+  // Rebuild the search string.
+  $string = implode('/', $args);
+
   // Get the view and set current display. The view and display were checked by
   // _views_autocomplete_filters_access_callback().
   $view = views_get_view($view_name);

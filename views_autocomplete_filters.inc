@@ -123,6 +123,16 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
 
   // Execute view query.
   $view->pre_execute();
+  $queryOptions = $display_handler->get_option('query');
+  $queryOptions['options']['distinct'] = '1';
+  $queryOptions['options']['pure_distinct'] = '1';
+  $display_handler->set_option('query',$queryOptions);
+  foreach ($view->field as $field_name => $field_obj) {
+    if (!in_array($field_name, $field_names)) {
+      unset($view->field[$field_name]);
+      unset($view->display_handler->handlers['field'][$field_name]);
+    }
+  }
   $view->execute($view->current_display);
   $view->post_execute();
 

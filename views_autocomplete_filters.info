@@ -6,7 +6,5 @@ backdrop = 1.x
 
 dependencies[] = views
 
-files[] = views/handlers/views_autocomplete_filters_handler_filter_string.inc
-files[] = views/handlers/views_autocomplete_filters_handler_filter_combine.inc
-files[] = views/handlers/views_autocomplete_filters_handler_filter_search_api_text.inc
-files[] = views/handlers/views_autocomplete_filters_handler_filter_search_api_fulltext.inc
+tags[] = Administration
+tags[] = Utility

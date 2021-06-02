@@ -5,6 +5,18 @@
  */
 
 /**
+ * Implements hook_autoload_info().
+ */
+function views_autocomplete_filters_hook_autoload_info() {
+  return array(
+    'views_autocomplete_filters_handler_filter_combine' => 'views/handlers/views_autocomplete_filters_handler_filter_combine.inc',
+    'views_autocomplete_filters_handler_filter_search_api_fulltext' => 'views/handlers/views_autocomplete_filters_handler_filter_search_api_fulltext.inc',
+    'views_autocomplete_filters_handler_filter_search_api_text' => 'views/handlers/views_autocomplete_filters_handler_filter_search_api_text.inc',
+    'views_autocomplete_filters_handler_filter_string' => 'views/handlers/views_autocomplete_filters_handler_filter_string.inc',
+  );
+}
+
+/**
  * Implements hook_menu().
  */
 function views_autocomplete_filters_menu() {

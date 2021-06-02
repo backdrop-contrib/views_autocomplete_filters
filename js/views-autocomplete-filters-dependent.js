@@ -51,7 +51,10 @@ Drupal.ACDB.prototype.search = function (searchString) {
         }
       },
       error: function (xmlhttp) {
-        alert(Drupal.ajaxError(xmlhttp, db.uri));
+        // Log error message to console instead of showing it with alert().
+        if (typeof(window.console) !== 'undefined') {
+          window.console.log(Drupal.ajaxError(xmlhttp, db.uri));
+        }
       }
     });
   }, this.delay);

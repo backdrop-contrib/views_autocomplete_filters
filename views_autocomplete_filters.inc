@@ -36,8 +36,8 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   $display_handler = $display->handler;
 
   // Get exposed filter options for our field.
-  // Also, check if filter is exposed and autocomplete is enabled for this filter
-  // (and if filter exists/exposed at all).
+  // Check if filter is exposed and autocomplete is enabled for this filter.
+  // If filter exists/exposed at all.
   $filters = $display_handler->get_option('filters');
   if (empty($filters[$filter_name]['exposed']) || empty($filters[$filter_name]['expose']['autocomplete_filter'])) {
     return backdrop_not_found();
@@ -64,10 +64,10 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   }
 
   // Determine fields which will be used for output.
-  if (empty($expose_options['autocomplete_field']) && !empty($filter['name']) ) {
+  if (empty($expose_options['autocomplete_field']) && !empty($filter['name'])) {
     if ($view->get_item($display_name, 'field', $filters[$filter_name]['id'])) {
       $field_name = $filters[$filter_name]['id'];
-      // force raw data for no autocomplete field defined.
+      // Force raw data for no autocomplete field defined.
       $expose_options['autocomplete_raw_suggestion'] = 1;
       $expose_options['autocomplete_raw_dropdown'] = 1;
     }
@@ -114,7 +114,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   $exposed_input[$expose_options['identifier']] = $string;
   $view->set_exposed_input($exposed_input);
 
-  // Disable cache for view, because caching autocomplete is a waste of time and memory.
+  // Disable cache for view, because caching autocomplete is a expensive.
   $display_handler->set_option('cache', array('type' => 'none'));
 
   // Force limit for results.
@@ -168,7 +168,9 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
       if (!$use_raw_suggestion || !$use_raw_dropdown) {
         $rendered_field = $view->style_plugin->get_field($index, $field_name);
       }
-      // Get the raw field value only if suggestion or dropdown item is in RAW format.
+
+      // Get the raw field value only if suggestion or dropdown item is in RAW
+      // format.
       if ($use_raw_suggestion || $use_raw_dropdown) {
         $raw_field = $view->style_plugin->get_field_value($index, $field_name);
         if (!is_array($raw_field)) {
@@ -185,14 +187,14 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
         // Use transliteration if available.
         if (function_exists('transliteration_get')) {
           if (isset($item['value']) && strstr(transliteration_get(decode_entities(backdrop_strtolower($item['value']))), transliteration_get(backdrop_strtolower($string)))) {
-            $dropdown = $use_raw_dropdown?check_plain($item['value']) : $rendered_field;
+            $dropdown = $use_raw_dropdown ? check_plain($item['value']) : $rendered_field;
           }
         }
         elseif (isset($item['value']) && strstr(backdrop_strtolower($item['value']), backdrop_strtolower($string))) {
-          $dropdown = $use_raw_dropdown?check_plain($item['value']) : $rendered_field;
+          $dropdown = $use_raw_dropdown ? check_plain($item['value']) : $rendered_field;
         }
         if ($dropdown != '') {
-          $suggestion = $use_raw_suggestion?check_plain($item['value']) : $rendered_field;
+          $suggestion = $use_raw_suggestion ? check_plain($item['value']) : $rendered_field;
           $suggestion = decode_entities($suggestion);
 
           // Add a class wrapper for a few required CSS overrides.

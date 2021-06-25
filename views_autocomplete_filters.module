@@ -186,7 +186,7 @@ function views_autocomplete_filters_filter_hander_value_form(&$form, &$form_stat
   }
 
   // Add autocomplete path to the exposed textfield.
-  $view_args = !empty($filter_handler->view->args) ? implode('||', $filter_handler->view->args) : 0;
+  $view_args = !empty($filter_handler->view->args)?implode('||', $filter_handler->view->args) : 0;
   $form['value']['#autocomplete_path'] = 'autocomplete_filter/' . $filter_handler->options['id'] . '/' . $filter_handler->view->name . '/' . $filter_handler->view->current_display . '/' . $view_args;
 
   // Add JS script with core autocomplete overrides to the end of JS files
@@ -251,4 +251,16 @@ function views_autocomplete_filters_filter_hander_validate(&$errors, $filter_han
       }
     }
   }
+}
+
+/**
+ * Implements hook_autoload_info().
+ */
+function views_autocomplete_filters_autoload_info() {
+  return array(
+    'views_autocomplete_filters_handler_filter_combine' => 'views/handlers/views_autocomplete_filters_handler_filter_combine.inc',
+    'views_autocomplete_filters_handler_filter_search_api_fulltext' => 'views/handlers/views_autocomplete_filters_handler_filter_search_api_fulltext.inc',
+    'views_autocomplete_filters_handler_filter_search_api_text' => 'views/handlers/views_autocomplete_filters_handler_filter_search_api_text.inc',
+    'views_autocomplete_filters_handler_filter_string' => 'views/handlers/views_autocomplete_filters_handler_filter_string.inc',
+  );
 }

@@ -138,7 +138,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   $queryOptions = $display_handler->get_option('query');
   $queryOptions['options']['distinct'] = '1';
   $queryOptions['options']['pure_distinct'] = '1';
-  $display_handler->set_option('query',$queryOptions);
+  $display_handler->set_option('query', $queryOptions);
   foreach ($view->field as $field_name => $field_obj) {
     if (!in_array($field_name, $field_names)) {
       unset($view->field[$field_name]);
@@ -185,14 +185,14 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
         // Use transliteration if available.
         if (function_exists('transliteration_get')) {
           if (isset($item['value']) && strstr(transliteration_get(decode_entities(backdrop_strtolower($item['value']))), transliteration_get(backdrop_strtolower($string)))) {
-            $dropdown = $use_raw_dropdown ? check_plain($item['value']) : $rendered_field;
+            $dropdown = $use_raw_dropdown?check_plain($item['value']) : $rendered_field;
           }
         }
         elseif (isset($item['value']) && strstr(backdrop_strtolower($item['value']), backdrop_strtolower($string))) {
-          $dropdown = $use_raw_dropdown ? check_plain($item['value']) : $rendered_field;
+          $dropdown = $use_raw_dropdown?check_plain($item['value']) : $rendered_field;
         }
         if ($dropdown != '') {
-          $suggestion = $use_raw_suggestion ? check_plain($item['value']) : $rendered_field;
+          $suggestion = $use_raw_suggestion?check_plain($item['value']) : $rendered_field;
           $suggestion = decode_entities($suggestion);
 
           // Add a class wrapper for a few required CSS overrides.

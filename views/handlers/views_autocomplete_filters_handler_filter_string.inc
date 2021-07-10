@@ -43,6 +43,7 @@ class views_autocomplete_filters_handler_filter_string extends views_handler_fil
    *   An array of errors triggered by this validation.
    */
   public function validate() {
+    
     $errors = parent::validate();
 
     // Use helper function, avoid code duplicates.

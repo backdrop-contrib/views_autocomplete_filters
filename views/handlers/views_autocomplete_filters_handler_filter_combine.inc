@@ -51,4 +51,5 @@ class views_autocomplete_filters_handler_filter_combine extends views_handler_fi
 
     return $errors;
   }
+
 }

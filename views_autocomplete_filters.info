@@ -1,10 +1,8 @@
 type = module
 name = Views Autocomplete Filters
-description = Autocomplete functionality for the views filter text fields.
+description = "Autocomplete functionality for the views filter text fields."
 package = Views
 backdrop = 1.x
-
 dependencies[] = views
-
 tags[] = Administration
 tags[] = Utility

@@ -50,4 +50,5 @@ class views_autocomplete_filters_handler_filter_search_api_fulltext extends Sear
 
     return $errors;
   }
+
 }

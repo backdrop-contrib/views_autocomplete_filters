@@ -37,9 +37,12 @@ function views_autocomplete_filters_menu() {
  * Access callback of autocomplete menu item.
  *
  * @param string $view_name
+ *   Name of the view.
  * @param string $display_name
+ *   Display name variable containing array.
  *
  * @return bool
+ *   Display name.
  */
 function _views_autocomplete_filters_access_callback($view_name, $display_name) {
   $view = views_get_view($view_name);
@@ -64,7 +67,8 @@ function views_autocomplete_filters_views_api() {
 }
 
 /**
- * Helper function for option_definition method for autocomplete filter handlers.
+ * Helper option_definition method for autocomplete filter handlers.
+ *
  * Needed to avoid code duplicates.
  *
  * @see views_autocomplete_filters_handler_filter_string()
@@ -85,6 +89,7 @@ function views_autocomplete_filters_filter_hander_option_definition(&$options) {
 
 /**
  * Helper function for expose_form method for autocomplete filter handlers.
+ *
  * Needed to avoid code duplicates.
  *
  * @see views_autocomplete_filters_handler_filter_string()
@@ -169,6 +174,7 @@ function views_autocomplete_filters_filter_hander_expose_form(&$form, &$form_sta
 
 /**
  * Helper function for value_form method for autocomplete filter handlers.
+ *
  * Needed to avoid code duplicates.
  *
  * @see views_autocomplete_filters_handler_filter_string()
@@ -204,6 +210,7 @@ function views_autocomplete_filters_filter_hander_value_form(&$form, &$form_stat
 
 /**
  * Helper function for validate method for autocomplete filter handlers.
+ *
  * Needed to avoid code duplicates.
  *
  * @see views_autocomplete_filters_handler_filter_string()
@@ -251,4 +258,16 @@ function views_autocomplete_filters_filter_hander_validate(&$errors, $filter_han
       }
     }
   }
+}
+
+/**
+ * Implements hook_autoload_info().
+ */
+function views_autocomplete_filters_autoload_info() {
+  return array(
+    'views_autocomplete_filters_handler_filter_combine' => 'views/handlers/views_autocomplete_filters_handler_filter_combine.inc',
+    'views_autocomplete_filters_handler_filter_search_api_fulltext' => 'views/handlers/views_autocomplete_filters_handler_filter_search_api_fulltext.inc',
+    'views_autocomplete_filters_handler_filter_search_api_text' => 'views/handlers/views_autocomplete_filters_handler_filter_search_api_text.inc',
+    'views_autocomplete_filters_handler_filter_string' => 'views/handlers/views_autocomplete_filters_handler_filter_string.inc',
+  );
 }

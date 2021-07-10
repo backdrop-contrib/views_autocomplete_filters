@@ -36,8 +36,8 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   $display_handler = $display->handler;
 
   // Get exposed filter options for our field.
-  // Also, check if filter is exposed and autocomplete is enabled for this filter
-  // (and if filter exists/exposed at all).
+  // Check if filter is exposed and autocomplete is enabled for this filter.
+  // If filter exists/exposed at all.
   $filters = $display_handler->get_option('filters');
   if (empty($filters[$filter_name]['exposed']) || empty($filters[$filter_name]['expose']['autocomplete_filter'])) {
     return backdrop_not_found();
@@ -64,10 +64,10 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   }
 
   // Determine fields which will be used for output.
-  if (empty($expose_options['autocomplete_field']) && !empty($filter['name']) ) {
+  if (empty($expose_options['autocomplete_field']) && !empty($filter['name'])) {
     if ($view->get_item($display_name, 'field', $filters[$filter_name]['id'])) {
       $field_name = $filters[$filter_name]['id'];
-      // force raw data for no autocomplete field defined.
+      // Force raw data for no autocomplete field defined.
       $expose_options['autocomplete_raw_suggestion'] = 1;
       $expose_options['autocomplete_raw_dropdown'] = 1;
     }
@@ -114,7 +114,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   $exposed_input[$expose_options['identifier']] = $string;
   $view->set_exposed_input($exposed_input);
 
-  // Disable cache for view, because caching autocomplete is a waste of time and memory.
+  // Disable cache for view, because caching autocomplete is a expensive.
   $display_handler->set_option('cache', array('type' => 'none'));
 
   // Force limit for results.
@@ -138,7 +138,7 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
   $queryOptions = $display_handler->get_option('query');
   $queryOptions['options']['distinct'] = '1';
   $queryOptions['options']['pure_distinct'] = '1';
-  $display_handler->set_option('query',$queryOptions);
+  $display_handler->set_option('query', $queryOptions);
   foreach ($view->field as $field_name => $field_obj) {
     if (!in_array($field_name, $field_names)) {
       unset($view->field[$field_name]);
@@ -168,7 +168,9 @@ function views_autocomplete_filter($filter_name, $view_name, $display_name, $vie
       if (!$use_raw_suggestion || !$use_raw_dropdown) {
         $rendered_field = $view->style_plugin->get_field($index, $field_name);
       }
-      // Get the raw field value only if suggestion or dropdown item is in RAW format.
+
+      // Get the raw field value only if suggestion or dropdown item is in RAW
+      // format.
       if ($use_raw_suggestion || $use_raw_dropdown) {
         $raw_field = $view->style_plugin->get_field_value($index, $field_name);
         if (!is_array($raw_field)) {

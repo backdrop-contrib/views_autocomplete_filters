@@ -119,19 +119,19 @@ function views_autocomplete_filters_filter_hander_expose_form(&$form, &$form_sta
       '#description' => t('Use Autocomplete for this filter.'),
     ),
     'autocomplete_items' => array(
-      '#type' => 'textfield',
+      '#type' => 'number',
       '#title' => t('Maximum number of items in Autocomplete results'),
       '#default_value' => $filter_handler->options['expose']['autocomplete_items'],
       '#description' => t('Enter 0 or empty for no limit.'),
-      '#element_validate' => array('element_validate_integer'),
       '#dependency' => array('edit-options-expose-autocomplete-filter' => array(TRUE)),
+      '#min' => 0,
     ),
     'autocomplete_min_chars' => array(
-      '#type' => 'textfield',
+      '#type' => 'number',
       '#title' => t('Minimum number of characters to start filter'),
       '#default_value' => $filter_handler->options['expose']['autocomplete_min_chars'],
-      '#element_validate' => array('element_validate_integer'),
       '#dependency' => array('edit-options-expose-autocomplete-filter' => array(TRUE)),
+      '#min' => 0,
     ),
     'autocomplete_dependent' => array(
       '#type' => 'checkbox',

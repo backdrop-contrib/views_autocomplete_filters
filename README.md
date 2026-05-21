@@ -60,17 +60,18 @@ https://github.com/backdrop-contrib/views_autocomplete_filters/issues.
 Current Maintainers
 -------------------
 
-- [Justin Christoffersen](https://github.com/jenlampton).
+- [Justin Christoffersen](https://github.com/larsdesigns).
 - [Jen Lampton](https://github.com/jenlampton).
+- [Laryn Kragt Bakker](https://github.com/laryn).
 - Seeking additional maintainers.
 
 
 Credits
 -------
 
-- Ported to Backdrop CMS by [Justin Christoffersen](https://github.com/jenlampton).
+- Ported to Backdrop CMS by [Justin Christoffersen](https://github.com/larsdesigns).
 - Ported to Backdrop CMS by [Jen Lampton](https://github.com/jenlampton).
-- Backdrop port sponsored by [Ivar Jacoboen International](https://www.ivarjacobson.com)
+- Backdrop port sponsored by [Ivar Jacobson International](https://www.ivarjacobson.com)
 - Originally written for Drupal by [Tavi Toporjinschi](https://github.com/vasike).
 - Drupal maintenance sponsored by [TOP EXPRESS](http://www.topexpress.ro/)
 - Initial Drupal version sponsored by [viennaresidence](http://www.viennaresidence.com/)
